@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Most popular secrets</h1>
+    <p><a href="/logout">Logout</a> | <a href="/success">Home</a></p>
+        {% if posts %}
+        <ul style="list-style-type:none">
+        {% for post in posts|slice:"3" %}
+            <li>
+            <h3>{{ post.message }}</h3>
+            {{ post.created_at|timesince }} ago |
+            {% if you %}
+                   You posted this | <a href="/deletePost/{{ post.id }}">Delete</a> |
+            {% endif %}
+            {{ post.num_likes }} likes |
+            {% if user in post.likes.all %}
+                 You liked this |
+                <a href="/unlike/{{ post.id }}/{{ user.id }}">Unlike</a>
+            {% else %}  
+                <a href="/like/{{ post.id }}/{{ user.id }}">Like</a>
+            {% endif %}  
+            </li>
+        {% endfor %}
+        <ul>
+    {% endif %}  
+    
+</body>
+</html>
